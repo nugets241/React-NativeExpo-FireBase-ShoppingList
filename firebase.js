@@ -4,13 +4,13 @@ import { getFirestore } from 'firebase/firestore';
 
 // Firebase configuration
 const firebaseConfig = {
-    apiKey: "AIzaSyDjO1ykWatMNohA_rudsfLlBD9SlaEgJE0",
-    authDomain: "shoppinglist-tamk.firebaseapp.com",
-    projectId: "shoppinglist-tamk",
-    storageBucket: "shoppinglist-tamk.appspot.com",
-    messagingSenderId: "57138560464",
-    appId: "1:57138560464:web:27a24d78cef9a337bf8dd5",
-    measurementId: "G-MZ5JY7Z4CS"
+    apiKey: process.env.REACT_APP_FIREBASE_API_KEY,
+    authDomain: process.env.REACT_APP_FIREBASE_AUTH_DOMAIN,
+    projectId: process.env.REACT_APP_FIREBASE_PROJECT_ID,
+    storageBucket: process.env.REACT_APP_FIREBASE_STORAGE_BUCKET,
+    messagingSenderId: process.env.REACT_APP_FIREBASE_MESSAGING_SENDER_ID,
+    appId: process.env.REACT_APP_FIREBASE_APP_ID,
+    measurementId: process.env.REACT_APP_FIREBASE_MEASUREMENT_ID,
 };
 
 // Initialize Firebase
