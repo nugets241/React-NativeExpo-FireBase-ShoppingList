@@ -13,6 +13,7 @@ export default function ShoppingList({ route }) {
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [editingItemId, setEditingItemId] = useState(null);
 
+
   useEffect(() => {
     const unsubscribe = onSnapshot(collection(db, `shoppingLists/${listId}/items`), snapshot => {
       const shoppingItems = snapshot.docs.map(doc => ({
