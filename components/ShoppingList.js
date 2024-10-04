@@ -1,11 +1,11 @@
-// components/ShoppingList.js
 import React, { useState, useEffect } from 'react';
 import { View, Text, TextInput, Button, FlatList, StyleSheet, TouchableOpacity, Modal } from 'react-native';
 import { db } from '../firebase';
 import { collection, onSnapshot, addDoc, doc, deleteDoc, updateDoc } from 'firebase/firestore';
+import { useNavigation } from '@react-navigation/native';  // Import navigation hook
 
 export default function ShoppingList({ route }) {
-  const { listId,updateItemCount } = route.params;  // Retrieve listId from navigation params
+  const { listId } = route.params;  // Retrieve listId from navigation params
   const [itemName, setItemName] = useState('');
   const [quantity, setQuantity] = useState('');
   const [unit, setUnit] = useState('');
@@ -13,6 +13,7 @@ export default function ShoppingList({ route }) {
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [editingItemId, setEditingItemId] = useState(null);
 
+  const navigation = useNavigation(); // Get the navigation object
 
   useEffect(() => {
     const unsubscribe = onSnapshot(collection(db, `shoppingLists/${listId}/items`), snapshot => {
@@ -21,10 +22,17 @@ export default function ShoppingList({ route }) {
         ...doc.data(),
       }));
       setItems(shoppingItems);
-      updateItemCount(listId, shoppingItems.length);
+
+      navigation.setOptions({
+        updateItemCount: () => updateItemCount(listId, shoppingItems.length)
+      });
     });
     return () => unsubscribe();
-  }, [listId,updateItemCount]);
+  }, [listId, navigation]);
+
+  const updateItemCount = (listId, itemCount) => {
+    console.log(`Item count for list ${listId}: ${itemCount}`);
+  };
 
   const addItem = async () => {
     if (itemName && quantity && unit) {
